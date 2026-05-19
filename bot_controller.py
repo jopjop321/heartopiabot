@@ -23,6 +23,7 @@ if getattr(sys, 'frozen', False):
 else:
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+def img(name): return os.path.join(BASE_DIR, 'images', name)
 def img_berry(name): return os.path.join(BASE_DIR, "images", "berry", name)
 def img_cooking(name): return os.path.join(BASE_DIR, "images", "cooking", name)
 def img_snow(name): return os.path.join(BASE_DIR, "images", "snow", name)
@@ -545,7 +546,7 @@ class App(tk.Tk):
             btn.config(bg=CARD2 if k == key else CARD,
                        fg=ac   if k == key else P_DIM)
 
-    def _t_presets_path(self): return img("berry3_presets.json")
+    def _t_presets_path(self): return img_berry("berry3_presets.json")
 
     def _load_t_presets_file(self):
         p = self._t_presets_path()
@@ -662,13 +663,13 @@ class App(tk.Tk):
         if key == "berry":
             mode   = self._berry_mode.get()
             action = self._single_action.get()
-            cfg = {"target_image": img("interact_btn01.png"),
+            cfg = {"target_image": img_berry("interact_btn01.png"),
                    "confidence":   self._b_conf.get(),
                    "walk":         self._b_walk.get(),
                    "cooldown":     self._b_cd.get(),
                    "collect_wait": self._b_cwait.get()}
             if mode == "triple":
-                cfg = {"target_image":   img("interact_btn01.png"),
+                cfg = {"target_image":   img_berry("interact_btn01.png"),
                        "confidence":     self._b_conf.get(),
                        "collect_wait":   self._b_cwait.get(),
                        "cooldown":       self._t_cd.get(),
@@ -696,11 +697,11 @@ class App(tk.Tk):
                 menu_queue = [{"name": n, "image": p} for n, p in self._cook_selected]
 
             cfg = {
-                "start_image":   img("start001.png"),
-                "start2_image":  img("start2.png"),
-                "cook1_image":   img("cook1.png"),
-                "endcook_image": img("endcook.png"),
-                "end_image":     img("end.png"),
+                "start_image":   img_cooking("start001.png"),
+                "start2_image":  img_cooking("start2.png"),
+                "cook1_image":   img_cooking("cook1.png"),
+                "endcook_image": img_cooking("endcook.png"),
+                "end_image":     img_cooking("end.png"),
                 "mode":          self._cook_mode.get(),
                 "menu_queue":    menu_queue,
             }
@@ -753,7 +754,7 @@ class App(tk.Tk):
         self._b_conf.set(cfg.get("confidence", 0.70))
         self._b_cwait.set(cfg.get("collect_wait", 1.5))
 
-    def _presets_path(self): return img("berry_presets.json")
+    def _presets_path(self): return img_berry("berry_presets.json")
 
     def _load_presets_file(self):
         p = self._presets_path()
