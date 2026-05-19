@@ -93,7 +93,7 @@ class SnowBot:
                     if pending:
                         n = self._click_all_snow(pending)
                         if n > 0:
-                            self.stat("snow", str(n))
+                            # self.stat("snow", str(n))
                             self.log(f"❄️ กด {n} จุด")
                             t0 = time.time()
                             while time.time() - t0 < 0.5 and not self._stop.is_set():

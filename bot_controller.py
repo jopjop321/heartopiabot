@@ -1,4 +1,4 @@
-"""
+﻿"""
 bot_controller.py — GUI only, import bots from separate files
 """
 import tkinter as tk
@@ -23,10 +23,10 @@ if getattr(sys, 'frozen', False):
 else:
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-def img(name): return os.path.join(BASE_DIR, 'images', name)
 def img_berry(name): return os.path.join(BASE_DIR, "images", "berry", name)
 def img_cooking(name): return os.path.join(BASE_DIR, "images", "cooking", name)
 def img_snow(name): return os.path.join(BASE_DIR, "images", "snow", name)
+def img(name): return os.path.join(BASE_DIR, "images", name)
 
 sys.path.insert(0, BASE_DIR)
 from bot_berry      import BerryBot, SingleBerryBot
@@ -137,28 +137,22 @@ class App(tk.Tk):
 
         tk.Label(self, text="✦ Heartopia",
                  font=("Segoe UI", 15, "bold"), bg=BG, fg=P_WHITE).place(x=20, y=14)
-        # ---- จัดกลุ่มมุมขวาบน (เป็นกล่องๆ เรียงกัน ไม่ทับแน่นอน) ----
-        # 1. สร้างกล่องหลักไปวางชิดขวาบน
         top_right_frame = tk.Frame(self, bg=BG)
         top_right_frame.place(x=W-16, y=14, anchor="ne")
 
-        # 2. กล่องปุ่ม "ล็อคเป้าใหม่" (สีม่วง)
         relock_btn = tk.Label(top_right_frame, text="🔄 ล็อคเป้าใหม่", 
                               font=("Segoe UI", 8, "bold"), bg=CARD2, fg=P_LILAC, 
                               cursor="hand2", padx=10, pady=4)
-        relock_btn.pack(side="left", padx=(0, 8)) # เรียงจากซ้าย เว้นระยะห่าง 8 px
+        relock_btn.pack(side="left", padx=(0, 8))
         relock_btn.bind("<Button-1>", lambda e: self._find_window())
 
-        # 3. กล่องสถานะ "idle / running" (สีทึบ)
         self._status_lbl = tk.Label(top_right_frame, text="idle", 
                                     font=("Segoe UI", 9, "bold"), bg=CARD, fg=P_DIM, 
                                     padx=12, pady=3)
-        self._status_lbl.pack(side="left") # เรียงต่อกันไป
-        # --------------------------------------------------------
+        self._status_lbl.pack(side="left")
         self._region = None
-        self._target_game = "Heartopia" # กำหนดชื่อเกมไว้ในตัวแปรธรรมดา
+        self._target_game = "Heartopia"
         self.after(500, self._find_window)
-        # -----------------------------
         tk.Frame(self, bg=BORDER, height=1).place(x=0, y=50, width=W)
 
         tab_bar = tk.Frame(self, bg=BG)
@@ -209,7 +203,6 @@ class App(tk.Tk):
         tk.Label(self, text=hint, font=("Segoe UI", 8),
                  bg=BG, fg=P_DIM).place(x=W//2, y=H-10, anchor="center")
 
-    # ── Berry tab ────────────────────────────────────────────────
     def _build_berry_tab(self, parent):
         ac = BOTS["berry"]["accent"]
         frame = tk.Frame(parent, bg=BG)
@@ -229,7 +222,6 @@ class App(tk.Tk):
 
         self._berry_mode    = tk.StringVar(value="double")
         self._single_action = tk.StringVar(value="collect")
-        # ── NEW: action สำหรับ 2 ต้น ─────────────────────────
         self._double_action = tk.StringVar(value="collect")
 
         mode_row = tk.Frame(frame, bg=BG)
@@ -249,14 +241,12 @@ class App(tk.Tk):
         self._mode_btn_triple = make_mode_btn(mode_row, "🍒🍒🍒  3 ต้น", "triple",
                                                self._berry_mode, lambda: _refresh())
 
-        # action row สำหรับ 1 ต้น (เดิม)
         self._action_row = tk.Frame(frame, bg=BG)
         self._action_btn_collect = make_mode_btn(self._action_row, "🍒 เก็บ", "collect",
                                                   self._single_action, lambda: _refresh())
         self._action_btn_chop    = make_mode_btn(self._action_row, "🪓 ตัด", "chop",
                                                   self._single_action, lambda: _refresh())
 
-        # ── NEW: action row สำหรับ 2 ต้น ──────────────────────
         self._action_row_double = tk.Frame(frame, bg=BG)
         self._action_btn_double_collect = make_mode_btn(
             self._action_row_double, "🍒 เก็บ", "collect",
@@ -298,7 +288,6 @@ class App(tk.Tk):
         self._b_cwait      = tk.DoubleVar(value=1.5)
         self._b_chop_times = tk.IntVar(value=3)
 
-        # triple mode vars
         self._t_cd       = tk.DoubleVar(value=98.0)
         self._t_walk12   = tk.DoubleVar(value=5.7)
         self._t_walk23_w = tk.DoubleVar(value=5.7)
@@ -320,7 +309,6 @@ class App(tk.Tk):
         self._slider_row(self._chop_row, "Chop Times",
                          self._b_chop_times, 1, 3, 1, "{:d}", ac)
 
-        # ── Triple mode config ────────────────────────────────────
         self._triple_section = tk.Frame(cfg_card, bg=CARD)
         t_hdr = tk.Frame(self._triple_section, bg=CARD)
         t_hdr.pack(fill="x", padx=10, pady=(8, 2))
@@ -349,7 +337,6 @@ class App(tk.Tk):
         self._slider_row(triple_slider_frame, "Walk 2→3 W (s)",
                          self._t_walk23_w, 0.0, 15.0, 0.1, "{:.1f}", ac)
 
-        # A/D selector + slider
         side_row = tk.Frame(triple_slider_frame, bg=CARD)
         side_row.pack(fill="x", padx=12, pady=(4, 0))
         tk.Label(side_row, text="ทิศทาง 2→3", font=("Segoe UI", 9),
@@ -379,13 +366,11 @@ class App(tk.Tk):
             self._mode_btn_triple.config(bg=CARD2 if mode=="triple" else CARD,
                                          fg=ac    if mode=="triple" else P_DIM)
 
-            # single action buttons
             self._action_btn_collect.config(bg=CARD2 if single_action=="collect" else CARD,
                                             fg=ac    if single_action=="collect" else P_DIM)
             self._action_btn_chop.config(   bg=CARD2 if single_action=="chop"    else CARD,
                                             fg=ac    if single_action=="chop"    else P_DIM)
 
-            # ── NEW: double action buttons ─────────────────────
             self._action_btn_double_collect.config(
                 bg=CARD2 if double_action=="collect" else CARD,
                 fg=ac    if double_action=="collect" else P_DIM)
@@ -393,7 +378,6 @@ class App(tk.Tk):
                 bg=CARD2 if double_action=="chop"    else CARD,
                 fg=ac    if double_action=="chop"    else P_DIM)
 
-            # show/hide action rows
             self._action_row.pack_forget()
             self._action_row_double.pack_forget()
             if mode == "single":
@@ -401,33 +385,29 @@ class App(tk.Tk):
             elif mode == "double":
                 self._action_row_double.pack(fill="x", pady=(0, 4), after=mode_row)
 
-            # show/hide chop row (single chop only)
             if mode == "single" and single_action == "chop":
                 self._chop_row.pack(fill="x")
-            # ── NEW: double chop ก็แสดง chop_row ──────────────
             elif mode == "double" and double_action == "chop":
                 self._chop_row.pack(fill="x")
             else:
                 self._chop_row.pack_forget()
 
-            # swap config sections
-            self._preset_section.pack_forget()
-            self._cfg_label.pack_forget()
-            slider_frame.pack_forget()
-            self._triple_section.pack_forget()
-            triple_slider_frame.pack_forget()
-
+            self._preset_section.pack(fill="x") if mode == "double" else self._preset_section.pack_forget()
+            self._triple_section.pack(fill="x") if mode == "triple" else self._triple_section.pack_forget()
+            
             if mode == "double":
-                self._preset_section.pack(fill="x")
                 slider_frame.pack(fill="x")
+                triple_slider_frame.pack_forget()
+                self._cfg_label.pack_forget()
             elif mode == "triple":
-                self._triple_section.pack(fill="x")
                 triple_slider_frame.pack(fill="x")
+                slider_frame.pack_forget()
+                self._cfg_label.pack_forget()
             else:
                 self._cfg_label.pack(fill="x")
                 slider_frame.pack(fill="x")
+                triple_slider_frame.pack_forget()
 
-            # resize container
             if (mode == "single" and single_action == "chop") or \
                (mode == "double" and double_action == "chop"):
                 container_h = 460
@@ -444,7 +424,6 @@ class App(tk.Tk):
                 self._log_frame.place(x=16, y=log_start, width=W-32,
                                       height=H - log_start - 20)
 
-            # defaults (only reset when switching mode, not action)
             if mode == "double" and double_action == "collect":
                 self._b_walk.set(5.7); self._b_cd.set(98); self._b_cwait.set(1.5)
             elif mode == "double" and double_action == "chop":
@@ -455,12 +434,10 @@ class App(tk.Tk):
         _refresh()
         return frame
 
-    # ── Cooking tab ───────────────────────────────────────────────
     def _build_cooking_tab(self, parent):
         ac = BOTS["cooking"]["accent"]
         frame = tk.Frame(parent, bg=BG)
 
-        # ── Stat cards ───────────────────────────────────────────
         sf = tk.Frame(frame, bg=BG)
         sf.pack(fill="x", pady=(4, 8))
         for i, (k, lbl, icon) in enumerate(BOTS["cooking"]["stats"]):
@@ -474,7 +451,6 @@ class App(tk.Tk):
             tk.Label(card, textvariable=self._stat_vars[vk],
                      font=("Segoe UI", 16, "bold"), bg=CARD, fg=ac).pack(pady=(2, 8))
 
-        # ── Mode sub-tabs ────────────────────────────────────────
         self._cook_mode = tk.StringVar(value="safe")
         self._cook_mode_btns = {}
         mode_row = tk.Frame(frame, bg=BG)
@@ -488,14 +464,13 @@ class App(tk.Tk):
             btn.bind("<Button-1>", lambda e, m=mode_key: self._set_cook_mode(m))
             self._cook_mode_btns[mode_key] = btn
 
-        # ── Menu toggle buttons ───────────────────────────────────
         tk.Label(frame, text="เมนู", font=("Segoe UI", 8, "bold"),
                  bg=BG, fg=P_DIM).pack(anchor="w", pady=(6, 2))
 
         menu_grid = tk.Frame(frame, bg=BG)
         menu_grid.pack(fill="x")
 
-        self._menu_btns = {}  # name -> Label widget
+        self._menu_btns = {}
         self._cook_selected = []
         
         def toggle_menu(name, ipath):
@@ -504,7 +479,7 @@ class App(tk.Tk):
                     self._cook_selected.pop(i)
                     _refresh_menu_btns()
                     return
-            self._cook_selected.append((name, img(ipath)))
+            self._cook_selected.append((name, img_cooking(ipath)))
             _refresh_menu_btns()
 
         def _refresh_menu_btns():
@@ -590,7 +565,6 @@ class App(tk.Tk):
             has = str(i) in data
             btn.config(bg=ac if has else CARD2, fg=BG if has else P_DIM)
 
-    # ── Snow tab ──────────────────────────────────────────────────
     def _build_snow_tab(self, parent):
         ac = BOTS["snow"]["accent"]
         frame = tk.Frame(parent, bg=BG)
@@ -609,7 +583,6 @@ class App(tk.Tk):
         tk.Frame(frame, bg=BG, height=8).pack()
         return frame
 
-    # ── Slider ───────────────────────────────────────────────────
     def _slider_row(self, parent, label, var, lo, hi, step, fmt, accent):
         row = tk.Frame(parent, bg=CARD)
         row.pack(fill="x", padx=12, pady=2)
@@ -628,7 +601,6 @@ class App(tk.Tk):
                  highlightthickness=0, sliderrelief="flat", sliderlength=18,
                  fg=P_WHITE).pack(fill="x", pady=(2, 0))
 
-    # ── Tab switch ───────────────────────────────────────────────
     def _switch_tab(self, key):
         if self._running: return
         self._current_tab = key
@@ -640,7 +612,6 @@ class App(tk.Tk):
             text=f"▶   START  ({BOTS[key]['hotkey']})",
             bg=ac, activebackground=P_PINK if key=="berry" else P_SKY)
 
-    # ── Toggle ───────────────────────────────────────────────────
     def _toggle(self):
         if not self._running: self._start()
         else:                  self._stop_bot()
@@ -690,7 +661,6 @@ class App(tk.Tk):
                 self._active_bot = BerryBot(cfg, log, stat)
 
         elif key == "cooking":
-            # ถ้าไม่เลือกเมนูเลย = ทำแค่เมนูล่าสุดในเกม
             if not self._cook_selected:
                 menu_queue = [{"name": "latest", "image": None}]
             else:
@@ -708,12 +678,12 @@ class App(tk.Tk):
             self._active_bot = CookingBot(cfg, log, stat)
 
         else:
-            cfg = {"start_image":  img("snow_start.png"),
-                   "start2_image": img("snow_confirm.png"),
-                   "snow_image":   img("snow_hit.png"),
-                   "end_image":    img("snow_end.png"),
-                   "end_image2":   img("snow_end2.png"),
-                   "end_image3":   img("snow_end3.png")}
+            cfg = {"start_image":  img_snow("snow_start.png"),
+                   "start2_image": img_snow("snow_confirm.png"),
+                   "snow_image":   img_snow("snow_hit.png"),
+                   "end_image":    img_snow("snow_end.png"),
+                   "end_image2":   img_snow("snow_end2.png"),
+                   "end_image3":   img_snow("snow_end3.png")}
             self._active_bot = SnowBot(cfg, log, stat)
         cfg["region"] = getattr(self, "_region", None)
         self._active_bot.start()
@@ -793,24 +763,18 @@ class App(tk.Tk):
 
     def _find_window(self):
         if not HAS_GW: return
-        
         title = getattr(self, "_target_game", "Heartopia") 
-        
-        # 🚨 แก้ตรงนี้: ค้นหาหน้าต่างที่มีคำว่า Heartopia แต่ "ต้องไม่มี" คำว่า Bot และ Visual Studio
         windows = [
             w for w in gw.getWindowsWithTitle(title) 
             if "Bot" not in w.title and "Visual Studio" not in w.title
         ]
-        
         if not windows:
             self._log(f"❌ หาหน้าต่างเกม '{title}' ไม่เจอ (เปิดเกมหรือยัง?)")
             self._region = None
             return
-            
         win = windows[0]
         self._region = (win.left, win.top, win.width, win.height)
         self._log(f"🎯 ล็อคเป้า '{win.title}' เรียบร้อย")
-    # -----------------------------
     
 if __name__ == "__main__":
     app = App()
