@@ -1,0 +1,11 @@
+# คัดออกโฟลเดอร์ขยะของ Python และระบบคอมไพล์
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# คัดออกโฟลเดอร์และไฟล์ที่เกิดจากการ Build (เช่น PyInstaller)
+build/
+dist/
+*.spec
+build.bat

@@ -1,0 +1,16 @@
+{
+  "1": {
+    "mode": "double",
+    "walk": 5.7,
+    "cooldown": 107.0,
+    "confidence": 0.7,
+    "collect_wait": 2.0
+  },
+  "2": {
+    "mode": "double",
+    "walk": 2.4,
+    "cooldown": 110.0,
+    "confidence": 0.7,
+    "collect_wait": 1.5
+  }
+}
