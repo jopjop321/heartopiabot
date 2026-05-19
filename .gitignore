@@ -9,3 +9,9 @@ build/
 dist/
 *.spec
 build.bat
+# Allow images folder
+!images/
+
+# Ignore image system cache
+Thumbs.db
+.DS_Store

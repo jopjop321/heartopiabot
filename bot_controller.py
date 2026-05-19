@@ -23,7 +23,9 @@ if getattr(sys, 'frozen', False):
 else:
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-def img(name): return os.path.join(BASE_DIR, name)
+def img_berry(name): return os.path.join(BASE_DIR, "images", "berry", name)
+def img_cooking(name): return os.path.join(BASE_DIR, "images", "cooking", name)
+def img_snow(name): return os.path.join(BASE_DIR, "images", "snow", name)
 
 sys.path.insert(0, BASE_DIR)
 from bot_berry      import BerryBot, SingleBerryBot
